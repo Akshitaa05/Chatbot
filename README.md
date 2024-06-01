@@ -19,16 +19,16 @@ A chatbot is a computer program designed to simulate human conversation. Chatbot
 
 ## Let's discuss the programm step by step.
 1. Setting Up Environment <a name="setting-up-environment"></a>
- Create a virtual environment using the following command:
+Create a virtual environment using the following command:
  ```python
 python -m venv chatbot
 ```
- Activate the environment using the following command:
+Activate the environment using the following command:
  ```python
   chatbot\Scripts\activate
 ```
 ### Benifits of using a virtual environment
- 1. Isolation of Dependencies
+1. Isolation of Dependencies
 A virtual environment isolates your project's dependencies from the system-wide Python environment. This means you can have specific versions of libraries and packages for your chatbot project without interfering with other projects or the global Python installation.
 2. Avoiding Dependency Conflicts
 Different projects might require different versions of the same package. A virtual environment allows you to maintain separate versions of packages for each project, preventing conflicts. For example, your chatbot project might need a specific version of rasa, while another project might need a different version.
