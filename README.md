@@ -1,5 +1,3 @@
-![image](https://github.com/Akshitaa05/Chatbot/assets/171258488/6cb49af8-d5ba-4e25-970a-f4d7559630f4)# Chatbot
-
 ## Overview 
 It Is a project based on NLP and Machine learning . In this I have made a chatbot to answer queries like human.
 
