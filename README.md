@@ -91,7 +91,7 @@ Download the required libarires.
 2. TensorFlow is widely used for developing deep learning models, including neural networks for tasks such as image recognition, natural language processing, and more.
 3. Natural Language Toolkit is a leading platform for building Python programs to work with human language data.
 
-4. Importing Libraries<a name="importing-libraries"></a>
+#### 4. Importing Libraries<a name="importing-libraries"></a>
 Import the libarires in your project using
  ```python
 import random
@@ -109,6 +109,75 @@ from nltk.stem import WordNetLemmatizer
 5. TensorFlow is widely used for developing deep learning models, including neural networks for tasks such as image recognition, natural language processing, and more
 6. Natural Language Toolkit is a leading platform for building Python programs to work with human language data.
 7. This line specifically imports the WordNetLemmatizer class from the nltk.stem module. Word lemmatization is the process of reducing a word to its base or root form, often used in natural language processing tasks.
+
+#### 5. Creating Variables<a name="creating-variables"></a>
+Create variables for further use using
+ ```python
+lemmatizer = WordNetLemmatizer()
+intents = json.loads(open('intents.json').read())
+words = []
+classes = []
+documents = []
+ignoreLetters = ['?', '!', '.', ',']
+```
+1. The line lemmatizer = WordNetLemmatizer() creates an instance of the WordNetLemmatizer class from the nltk.stem module. This instance, often referred to as lemmatizer, allows you to perform lemmatization on words in your text data.
+2. The line intents = json.loads(open('intents.json').read()) is used to load JSON data from a file named 'intents.json' into a Python dictionary.
+open('intents.json').read(): This part of the line opens the file named 'intents.json' in the current directory and reads its contents as a string.The json.loads() function is used to parse JSON data from a string into a Python dictionary.
+###### Wordnetlematizer is used to reduce the words to its base form(EG:- running,ran,runned all converted to its root form run.) to improve accuracy.
+3. The word list is typically used to store all the words found in the training data. Each word will represent a unique token in the text data. The words will be extracted from the patterns in the training data, and duplicates will be removed to create a vocabulary.
+4. The classes list is used to store all the unique classes or intents present in the training data. Each class represents a category or label that the chatbot should be able to recognize and respond to.
+5. The document list is used to store tuples containing the patterns (inputs) and their corresponding class or intent labels (outputs). Each tuple represents a training example. For example, if a pattern like "Hi there" is associated with the intent "greeting", it will be stored as a tuple ("Hi there", "greeting") in the documents list.
+6. The ignoreletters list contains characters that should be ignored or removed from the patterns during preprocessing.
+
+#### 6. Preprocessing the Training Data<a name="preprocessing-data"></a>
+Now, we will preprocess the data and make it suitable for usage.
+ ```python
+for intent in intents['intents']:
+    for pattern in intent['patterns']:
+        wordList = nltk.word_tokenize(pattern)
+        words.extend(wordList)
+        documents.append((wordList, intent['tag']))
+        if intent['tag'] not in classes:
+            classes.append(intent['tag'])
+
+words = [lemmatizer.lemmatize(word) for word in words if word not in ignoreLetters]
+words = sorted(set(words))
+
+classes = sorted(set(classes))
+
+pickle.dump(words, open('words.pkl', 'wb'))
+pickle.dump(classes, open('classes.pkl', 'wb'))
+```
+### Let's Learn the  functioning of each line:-
+1. In the first for loop, we traverse through each intent (column/different types of segments) of the intents file. In intent we have patterns so the inner for loop is for traversing through each pattern one by one.
+A pattern is a set of words user might give to the chatbot . Wordlist is a list that creates tokens of each pattern . We tokenise each pattern and store the tokens in wordlist(a list).
+Now each token is added to the empty word list we created to create the vocabulary. of the chatbot.
+Next we add the tuple containing each token and the tag it belongs to the document list(empty list we created).
+Now if the tag is already present good. But if not add it to the classes list.(stores unique tags).
+    ###### This segment of code is crucial for preprocessing the training data and organizing it into a format suitable for training a machine learning model. It extracts words from patterns, builds a vocabulary, creates training examples, and identifies unique intent classes, laying the groundwork for training the chatbot model to recognize and respond to user inputs effectively.Prepared the data for training.
+2. In the next few lines of code, a new list words is created which contains each instance in the word list lemmatized (converted to its root form) only in case if it is not in ignoreletters list*(actual words).
+Then the list  words is converted to set(to remove duplicate items) and is sorted alphabetically to form a proper vocabulary.
+Similarly classes list is converted to set(to remove duplicate items) and is sorted alphabetically to form a proper vocabulary.
+3. In the next part pickle module is introduced.
+    #### Pickle Module
+    The pickle module in Python provides a way to serialize and deserialize Python objects. Serialization (or "pickling") is the process of converting a Python object into a byte stream, and deserialization (or "unpickling") is the reverse process.
+    
+    Why Save These Lists?
+    	• Reusability: By saving the words and classes lists to files, you can reuse them later without needing to preprocess the raw data again. This can save time, especially if preprocessing is computationally expensive.
+    	• Consistency: Ensuring that the same words and classes are used consistently across different runs of your program helps maintain the integrity of your machine learning model. This is crucial for tasks such as feature extraction, where the vocabulary (words) needs to be consistent.
+    	• Portability: Serialized files can be shared or transferred between different environments or systems, allowing you to use the same preprocessed data elsewhere.
+
+The lines of code involving pickle.dump are used to save the words and classes lists to disk. This process is called serialization, and it allows you to save Python objects to a file so they can be loaded later without needing to recreate them.
+• words: This is the list of unique, lemmatized, and sorted words that was created in the previous steps.
+open('words.pkl', 'wb'): This part opens a file named words.pkl in write-binary mode ('wb'). If the file does not exist, it will be created.
+pickle.dump(words, ...): This function call serializes the words list and writes it to the words.pkl
+
+• classes: This is the list of unique intent tags that was created during the preprocessing steps.
+open('classes.pkl', 'wb'): This part opens a file named classes.pkl in write-binary mode ('wb'). If the file does not exist, it will be created.
+pickle.dump(classes, ...): This function call serializes the classes list and writes it to the classes.pkl file.
+
+
+
 
 
 
