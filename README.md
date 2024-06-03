@@ -177,6 +177,112 @@ pickle.dump(words, ...): This function call serializes the words list and writes
 open('classes.pkl', 'wb'): This part opens a file named classes.pkl in write-binary mode ('wb'). If the file does not exist, it will be created.
 pickle.dump(classes, ...): This function call serializes the classes list and writes it to the classes.pkl file.
 
+#### 7.Preparing Training Data<a name="preparing-training-data"></a>
+Now, we will train the model by using
+ ```python
+training = []
+outputEmpty = [0] * len(classes)
+
+for document in documents:
+    bag = []
+    wordPatterns = document[0]
+    wordPatterns = [lemmatizer.lemmatize(word.lower()) for word in wordPatterns]
+    for word in words:
+        bag.append(1) if word in wordPatterns else bag.append(0)
+
+    outputRow = list(outputEmpty)
+    outputRow[classes.index(document[1])] = 1
+    training.append(bag + outputRow)
+
+random.shuffle(training)
+training = np.array(training)
+
+trainX = training[:, :len(words)]
+trainY = training[:, len(words):]
+```
+This block of code prepares the training data for a machine learning model by creating a bag-of-words representation for each document and encoding the corresponding intent labels.
+Convert each pattern into bag of words(a list of binary values indicating whether each word in words is present or not in the pattern ). The corresponding intent is also converted into one hot encoded vector indicating which intent it belongs to. These bag of words and encoded vectors are combined and added to a list called training.
+The training list is shuffled randomly to ensure that neural network does not learn any older dependencies.
+Finally the training list is converted into numpy array and split into separate arrays from the bow(trainX) and ev(trainY).
+
+1. training: This list will store the training data, where each element represents a training example.
+2. outputEmpty: This list is used as a template for encoding the intent labels(classes/unique list of tags). It contains zeros and has the same length as the classes list. The outputEmpty list is created with all elements initialized to zero. Its length is equal to the number of classes. Each element in outputEmpty corresponds to a class label.
+3. For each document in the dataset, let's say we have a document like this: (["hello", "world"], "greeting"), a bag-of-words representation is created.
+4. The wordPatterns variable contains the tokenized pattern of the document.
+5. Each word in wordPatterns is lemmatized and converted to lowercase.
+6. For each word in the words list (which contains the unique vocabulary), a binary value is added to the bag list: 1 if the word is present in the document's word patterns, and 0 otherwise. This creates a binary vector representing which words from the vocabulary are present in the document.
+7. An empty list (outputRow) is initialized with zeros using outputEmpty as a template.
+8. The index corresponding to the intent label of the document is set to 1, encoding the intent label as a one-hot vector. This means that the position corresponding to the class of the document is set to 1, while all other positions remain 0.
+9. The bag-of-words representation (bag) and the one-hot encoded intent label (outputRow) are concatenated and added as a single training example to the training list.
+10. The training data is shuffled to ensure that the examples are presented in random order during training.
+11. Finally, the training list is converted to a NumPy array for efficient processing and manipulation.
+After this process, trainX will contain the input features (bag-of-words representations), and trainY will contain the corresponding output labels (intent labels encoded as one-hot vectors). These arrays can then be used to train a machine learning model.
+12. This code block is splitting the training data array into input features (trainX) and output labels (trainY). 
+• Explanation of trainX:
+	trainX is assigned a portion of the training array.
+	training[:, :len(words)] selects all rows (:) of the training array and the first len(words) columns.
+	These first len(words) columns represent the input features (bag-of-words representations) of the training data.
+• Explanation of trainY:
+	trainY is assigned another portion of the training array.
+	training[:, len(words):] selects all rows (:) of the training array and all columns starting from the column at index len(words) (exclusive).
+	These columns starting from index len(words) represent the output labels (encoded intent labels) of the training data.
+	
+After this we have set a bag of words for the representation of documents by setting the value of each word in words as 1 if it appears in the list and 0 otherwise.
+
+#### 7. Building Neural Network Model<a name="building-neural-network-model"></a>
+8. Now, we will create a new sequential keras model which is a linear stack of layers. 
+Neural network is defined using the tensorflow sequential API which allows the layers to be added in the sequence .Use
+ ```python
+model = tf.keras.Sequential()
+```
+This initializes a sequential model in TensorFlow's Keras API. 
+A sequential model is a linear stack of layers where each layer has exactly one input tensor and one output tensor. This type of model is suitable for building simple feedforward neural networks.
+
+Next, We add a densely connected neural network layer to the model.
+The choice of the number of dense layers in a neural network architecture depends on various factors, including the complexity of the problem, the size of the dataset, and computational resources. Adding more or fewer layers can impact the model's capacity to learn and its performance. 
+ ```python
+model.add(tf.keras.layers.Dense(128, input_shape=(len(trainX[0]),), activation = 'relu'))
+model.add(tf.keras.layers.Dropout(0.5))
+model.add(tf.keras.layers.Dense(64, activation = 'relu'))
+model.add(tf.keras.layers.Dropout(0.5))
+model.add(tf.keras.layers.Dense(len(trainY[0]), activation='softmax'))
+```
+This neural network consist of 3 fully connected layers. 
+The first two are the input layers which also include the dropout regularization which helps to prevent overfitting.
+
+1 First we add a dense layer with 128 units. input_shape=(len(trainX[0]),): Specifies the input shape for the first layer. len(trainX[0]) corresponds to the number of features in the input data.
+activation='relu': Applies the ReLU (Rectified Linear Unit) activation function to introduce non-linearity.
+2 Then add a dropout layer with a dropout rate of 0.5. Dropout is a regularization technique that randomly sets a fraction of input units to zero during training to prevent overfitting.
+3 Then add another dense layer with 64 units. Again, uses the ReLU activation function for introducing non-linearity.
+4 After that add another dropout layer with a dropout rate of 0.5.
+5 At last add the output layer with units equal to the number of classes in the output (len(trainY[0])). Uses the softmax activation function to produce a probability distribution over the classes.
+
+In summary, the provided code defines a sequential neural network model with two dense layers, each followed by a dropout layer for regularization, and an output layer with softmax activation for multiclass classification.
+
+Dense Layer (Fully Connected Layer):
+	○ The dense layer is the fundamental building block of a neural network.
+	○ Each neuron in a dense layer is connected to every neuron in the previous layer.
+	○ The number of neurons in the layer defines the dimensionality of the output space.
+	○ Activation functions, such as ReLU (Rectified Linear Unit), introduce non-linearity to the model, allowing it to learn complex patterns in the data.
+Dropout Layer:
+	○ Dropout is a regularization technique used to prevent overfitting in neural networks.
+	○ During training, a dropout layer randomly sets a fraction of input units to zero.
+	○ This helps to prevent the model from relying too heavily on specific features or neurons, forcing it to learn more robust representations.
+
+Let's put it in the context of our model:
+The first dense layer (Dense(128, activation='relu')) takes the input data and applies a linear transformation followed by the ReLU activation function, resulting in a higher-level representation of the data.(128)
+The dropout layer (Dropout(0.5)) randomly sets 50% of the input units to zero during training, preventing overfitting by introducing redundancy and reducing the risk of relying too heavily on specific features.(50%*128=64 destroyed)
+The second dense layer (Dense(64, activation='relu')) further transforms the data, potentially extracting more complex features.(128-64=64 remaining)
+Another dropout layer is added for regularization.(50%*64=32 destroyed)
+Finally, the output layer (Dense(len(trainY[0]), activation='softmax')) produces the final predictions, with the softmax activation function converting the model's raw output into probabilities for each class.
+
+### The final output layer will have the same number of units as the number of classes in the output (len(trainY[0])). The number of units in the hidden layers (128 and 64) does not affect the number of units in the output layer. The dropout layers are used for regularization and do not change the number of units in the network. Therefore, we don't end up with just 32 units remaining in the output layer.
+
+
+
+
+
+
 
 
 
