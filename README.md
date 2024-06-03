@@ -168,6 +168,7 @@ Similarly classes list is converted to set(to remove duplicate items) and is sor
     	• Portability: Serialized files can be shared or transferred between different environments or systems, allowing you to use the same preprocessed data elsewhere.
 
 The lines of code involving pickle.dump are used to save the words and classes lists to disk. This process is called serialization, and it allows you to save Python objects to a file so they can be loaded later without needing to recreate them.
+
 • words: This is the list of unique, lemmatized, and sorted words that was created in the previous steps.
 open('words.pkl', 'wb'): This part opens a file named words.pkl in write-binary mode ('wb'). If the file does not exist, it will be created.
 pickle.dump(words, ...): This function call serializes the words list and writes it to the words.pkl
