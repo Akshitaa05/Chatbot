@@ -18,7 +18,7 @@ A chatbot is a computer program designed to simulate human conversation. Chatbot
 11. [Conclusion](#conclusion)
 
 ## Let's discuss the programm step by step.
-1. Setting Up Environment <a name="setting-up-environment"></a>
+#### 1. Setting Up Environment <a name="setting-up-environment"></a>
 Create a virtual environment using the following command:
 ```python
 python -m venv chatbot
@@ -39,7 +39,7 @@ Within a virtual environment, you can install, update, and manage packages speci
 5. Enhanced Security
 By isolating your project's dependencies, you minimize the risk of inadvertently affecting system-wide libraries, which can be critical for maintaining the integrity and security of your system.
 
-2. Creating Intent Training Data<a name="creating-intent-training-data"></a>
+#### 2. Creating Intent Training Data<a name="creating-intent-training-data"></a>
  Create a intent.json file on vs code.
  ```python
   {"intents": [
@@ -80,7 +80,7 @@ Purpose of the intents.json File
 4. Context:
 The context field can be used to manage the conversation state and flow, although it's not used in your example. Contexts allow the bot to keep track of where it is in a conversation and respond appropriately based on previous interactions.
 
-3. Installing Libraries <a name="installing-libraries"></a>
+#### 3. Installing Libraries <a name="installing-libraries"></a>
 Download the required libarires.
  ```python
   pip install numpy!
