@@ -20,11 +20,11 @@ A chatbot is a computer program designed to simulate human conversation. Chatbot
 ## Let's discuss the programm step by step.
 1. Setting Up Environment <a name="setting-up-environment"></a>
 Create a virtual environment using the following command:
- ```python
+```python
 python -m venv chatbot
 ```
 Activate the environment using the following command:
- ```python
+```python
   chatbot\Scripts\activate
 ```
 ### Benifits of using a virtual environment
@@ -94,7 +94,7 @@ Download the required libarires.
 4. Importing Libraries<a name="importing-libraries"></a>
 Import the libarires in your project using
  ```python
-  import random
+import random
 import json
 import pickle
 import numpy as np
