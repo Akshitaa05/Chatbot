@@ -27,7 +27,7 @@ Activate the environment using the following command:
 ```python
   chatbot\Scripts\activate
 ```
-### Benifits of using a virtual environment
+#### Benifits of using a virtual environment
 1. Isolation of Dependencies
 A virtual environment isolates your project's dependencies from the system-wide Python environment. This means you can have specific versions of libraries and packages for your chatbot project without interfering with other projects or the global Python installation.
 2. Avoiding Dependency Conflicts
