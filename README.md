@@ -269,13 +269,13 @@ Dropout Layer:
 	○ This helps to prevent the model from relying too heavily on specific features or neurons, forcing it to learn more robust representations.
 
 Let's put it in the context of our model:
-The first dense layer (Dense(128, activation='relu')) takes the input data and applies a linear transformation followed by the ReLU activation function, resulting in a higher-level representation of the data.(128)
-The dropout layer (Dropout(0.5)) randomly sets 50% of the input units to zero during training, preventing overfitting by introducing redundancy and reducing the risk of relying too heavily on specific features.(50%*128=64 destroyed)
-The second dense layer (Dense(64, activation='relu')) further transforms the data, potentially extracting more complex features.(128-64=64 remaining)
-Another dropout layer is added for regularization.(50%*64=32 destroyed)
-Finally, the output layer (Dense(len(trainY[0]), activation='softmax')) produces the final predictions, with the softmax activation function converting the model's raw output into probabilities for each class.
+1. The first dense layer (Dense(128, activation='relu')) takes the input data and applies a linear transformation followed by the ReLU activation function, resulting in a higher-level representation of the data.(128)
+2. The dropout layer (Dropout(0.5)) randomly sets 50% of the input units to zero during training, preventing overfitting by introducing redundancy and reducing the risk of relying too heavily on specific features.(50%*128=64 destroyed).
+3. The second dense layer (Dense(64, activation='relu')) further transforms the data, potentially extracting more complex features.(128-64=64 remaining)
+4. Another dropout layer is added for regularization.(50%*64=32 destroyed)
+5. Finally, the output layer (Dense(len(trainY[0]), activation='softmax')) produces the final predictions, with the softmax activation function converting the model's raw output into probabilities for each class.
 
-### The final output layer will have the same number of units as the number of classes in the output (len(trainY[0])). The number of units in the hidden layers (128 and 64) does not affect the number of units in the output layer. The dropout layers are used for regularization and do not change the number of units in the network. Therefore, we don't end up with just 32 units remaining in the output layer.
+#### The final output layer will have the same number of units as the number of classes in the output (len(trainY[0])). The number of units in the hidden layers (128 and 64) does not affect the number of units in the output layer. The dropout layers are used for regularization and do not change the number of units in the network. Therefore, we don't end up with just 32 units remaining in the output layer.
 
 
 
