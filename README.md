@@ -230,7 +230,7 @@ After this process, trainX will contain the input features (bag-of-words represe
 After this we have set a bag of words for the representation of documents by setting the value of each word in words as 1 if it appears in the list and 0 otherwise.
 
 #### 7. Building Neural Network Model<a name="building-neural-network-model"></a>
-8. Now, we will create a new sequential keras model which is a linear stack of layers. 
+Now, we will create a new sequential keras model which is a linear stack of layers. 
 Neural network is defined using the tensorflow sequential API which allows the layers to be added in the sequence .Use
  ```python
 model = tf.keras.Sequential()
@@ -250,12 +250,11 @@ model.add(tf.keras.layers.Dense(len(trainY[0]), activation='softmax'))
 This neural network consist of 3 fully connected layers. 
 The first two are the input layers which also include the dropout regularization which helps to prevent overfitting.
 
-1 First we add a dense layer with 128 units. input_shape=(len(trainX[0]),): Specifies the input shape for the first layer. len(trainX[0]) corresponds to the number of features in the input data.
-activation='relu': Applies the ReLU (Rectified Linear Unit) activation function to introduce non-linearity.
-2 Then add a dropout layer with a dropout rate of 0.5. Dropout is a regularization technique that randomly sets a fraction of input units to zero during training to prevent overfitting.
-3 Then add another dense layer with 64 units. Again, uses the ReLU activation function for introducing non-linearity.
-4 After that add another dropout layer with a dropout rate of 0.5.
-5 At last add the output layer with units equal to the number of classes in the output (len(trainY[0])). Uses the softmax activation function to produce a probability distribution over the classes.
+1. First we add a dense layer with 128 units. input_shape=(len(trainX[0]),): Specifies the input shape for the first layer. len(trainX[0]) corresponds to the number of features in the input data. activation='relu': Applies the ReLU (Rectified Linear Unit) activation function to introduce non-linearity.
+2. Then add a dropout layer with a dropout rate of 0.5. Dropout is a regularization technique that randomly sets a fraction of input units to zero during training to prevent overfitting.
+3. Then add another dense layer with 64 units. Again, uses the ReLU activation function for introducing non-linearity.
+4. After that add another dropout layer with a dropout rate of 0.5.
+5. At last add the output layer with units equal to the number of classes in the output (len(trainY[0])). Uses the softmax activation function to produce a probability distribution over the classes.
 
 In summary, the provided code defines a sequential neural network model with two dense layers, each followed by a dropout layer for regularization, and an output layer with softmax activation for multiclass classification.
 
