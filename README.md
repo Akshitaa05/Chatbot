@@ -259,14 +259,14 @@ The first two are the input layers which also include the dropout regularization
 In summary, the provided code defines a sequential neural network model with two dense layers, each followed by a dropout layer for regularization, and an output layer with softmax activation for multiclass classification.
 
 Dense Layer (Fully Connected Layer):
-	○ The dense layer is the fundamental building block of a neural network.
-	○ Each neuron in a dense layer is connected to every neuron in the previous layer.
-	○ The number of neurons in the layer defines the dimensionality of the output space.
-	○ Activation functions, such as ReLU (Rectified Linear Unit), introduce non-linearity to the model, allowing it to learn complex patterns in the data.
+	1. The dense layer is the fundamental building block of a neural network.
+	2. Each neuron in a dense layer is connected to every neuron in the previous layer.
+	3. The number of neurons in the layer defines the dimensionality of the output space.
+	4. Activation functions, such as ReLU (Rectified Linear Unit), introduce non-linearity to the model, allowing it to learn complex patterns in the data.
 Dropout Layer:
-	○ Dropout is a regularization technique used to prevent overfitting in neural networks.
-	○ During training, a dropout layer randomly sets a fraction of input units to zero.
-	○ This helps to prevent the model from relying too heavily on specific features or neurons, forcing it to learn more robust representations.
+	1. Dropout is a regularization technique used to prevent overfitting in neural networks.
+	2. During training, a dropout layer randomly sets a fraction of input units to zero.
+	3. This helps to prevent the model from relying too heavily on specific features or neurons, forcing it to learn more robust representations.
 
 Let's put it in the context of our model:
 1. The first dense layer (Dense(128, activation='relu')) takes the input data and applies a linear transformation followed by the ReLU activation function, resulting in a higher-level representation of the data.(128)
