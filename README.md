@@ -229,7 +229,7 @@ After this process, trainX will contain the input features (bag-of-words represe
 	
 After this we have set a bag of words for the representation of documents by setting the value of each word in words as 1 if it appears in the list and 0 otherwise.
 
-#### 7. Building Neural Network Model<a name="building-neural-network-model"></a>
+#### 8. Building Neural Network Model<a name="building-neural-network-model"></a>
 Now, we will create a new sequential keras model which is a linear stack of layers. 
 Neural network is defined using the tensorflow sequential API which allows the layers to be added in the sequence .Use
  ```python
