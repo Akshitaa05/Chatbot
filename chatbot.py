@@ -29,7 +29,7 @@ def bag_of_words(sentence):
 def predict_class(sentence):
     bow = bag_of_words(sentence)
     res = model.predict(np.array([bow]))[0]
-    ERROR_THRESHOLD = 0.75
+    ERROR_THRESHOLD = 0.25
     results = [[i, r] for i, r in enumerate(res) if r > ERROR_THRESHOLD]
 
     results.sort(key=lambda x: x[1], reverse=True)
@@ -66,7 +66,9 @@ while True:
     ints = predict_class(message)
     print("Intents:", ints)  # Debug statement
     if ints:
-        res = get_response(ints, intents)
+        # Select the intent with the highest probability
+        top_intent = max(ints, key=lambda x: float(x['probability']))
+        res = get_response([top_intent], intents)
         print("Response:", res)  # Debug statement
     else:
         res = fallback_response()
