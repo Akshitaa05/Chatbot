@@ -1,22 +1,91 @@
-{"intents": [
-    {"tag": "greeting",
-     "patterns": ["Hi there", "How are you", "Is anyone there?","Hey","Hola", "Hello", "Good day"],
-     "responses": ["Hello", "Good to see you again", "Hi there, how can I help?"],
-     "context": [""]
-    },
-    {"tag": "goodbye",
-     "patterns": ["Bye", "See you later", "Goodbye", "Nice chatting to you, bye", "Till next time"],
-     "responses": ["See you!", "Have a nice day", "Bye! Come back again soon."],
-     "context": [""]
-    },
-    {"tag": "thanks",
-     "patterns": ["Thanks", "Thank you", "That's helpful", "Awesome, thanks", "Thanks for helping me"],
-     "responses": ["My pleasure", "You're Welcome"],
-     "context": [""]
-    },
-    {"tag": "query",
-     "patterns": ["What is Machine Learning?"],
-     "responses": ["Machine learning (ML) is a branch of artificial intelligence (AI) and computer science that focuses on the using data and algorithms to enable AI to imitate the way that humans learn, gradually improving its accuracy. "],
-     "context": [""]
-    } 
-]}
+      {
+        "intents": [
+          {
+            "tag": "greeting",
+            "patterns": ["Hello", "Hi", "Hey", "Good morning", "Good evening", "Howdy", "What's up", "Greetings", "How are you?"],
+            "responses": ["Hello!", "Hi there!", "Hey!", "Good to see you!", "Greetings!", "How can I assist you today?"]
+          },
+          {
+            "tag": "goodbye",
+            "patterns": ["Goodbye", "Bye", "See you later", "Farewell", "Catch you later", "Talk to you soon", "I'm leaving", "Have a good day"],
+            "responses": ["Goodbye!", "See you later!", "Farewell!", "Have a great day!", "Take care!", "Bye!"]
+          },
+          {
+            "tag": "thanks",
+            "patterns": ["Thanks", "Thank you", "I appreciate it", "Much obliged", "Thanks a lot", "Thank you very much", "Thanks for your help"],
+            "responses": ["You're welcome!", "Happy to help!", "Anytime!", "My pleasure!", "No problem!", "Glad I could assist!"]
+          },
+          {
+            "tag": "name",
+            "patterns": ["What's your name?", "Who are you?", "What should I call you?", "Do you have a name?", "Introduce yourself"],
+            "responses": ["I am your friendly chatbot!", "You can call me Chatbot.", "My name is Chatbot.", "I'm Chatbot, your virtual assistant."]
+          },
+          {
+            "tag": "age",
+            "patterns": ["How old are you?", "What is your age?", "Are you old?", "When were you created?", "How long have you been around?"],
+            "responses": ["I am timeless!", "I was created recently, but I'm always learning.", "Age is just a number!", "I'm as old as the internet."]
+          },
+          {
+            "tag": "location",
+            "patterns": ["Where are you from?", "Where do you live?", "Where are you located?", "Where is your home?", "Where do you stay?"],
+            "responses": ["I'm a virtual entity, existing in the digital world.", "I live in the cloud.", "I'm from the internet!", "I reside in cyberspace."]
+          },
+          {
+            "tag": "weather",
+            "patterns": ["What's the weather like?", "How's the weather?", "Is it raining?", "Tell me about the weather", "Is it sunny today?"],
+            "responses": ["I don't have real-time weather info, but you can check a weather website!", "I'm not sure, but you can look outside!", "Check your local weather app for the latest updates."]
+          },
+          {
+            "tag": "joke",
+            "patterns": ["Tell me a joke", "Make me laugh", "Do you know any jokes?", "Can you tell a funny story?", "I need a laugh"],
+            "responses": ["Why don't scientists trust atoms? Because they make up everything!", "What do you call fake spaghetti? An impasta!", "Why did the scarecrow win an award? Because he was outstanding in his field!"]
+          },
+          {
+            "tag": "help",
+            "patterns": ["I need help", "Can you help me?", "I need assistance", "Help me please", "Can you assist me?"],
+            "responses": ["Of course! What do you need help with?", "I'm here to help. What can I do for you?", "Sure, let me know how I can assist you.", "I'm ready to help. What's the issue?"]
+          },
+          {
+            "tag": "hours",
+            "patterns": ["What are your hours?", "When are you available?", "What is your working time?", "When can I talk to you?"],
+            "responses": ["I'm available 24/7!", "You can talk to me any time, I'm always here!", "I don't have specific hours, I'm here whenever you need me."]
+          },
+          {
+            "tag": "contact",
+            "patterns": ["How can I contact you?", "What is your contact information?", "Contact details", "How to reach you?", "Your phone number"],
+            "responses": ["You can contact us via email or phone. Visit our website for more details.", "Our contact information is available on our website.", "Please visit our website for our contact details."]
+          },
+          {
+            "tag": "technical_support",
+            "patterns": ["I need technical support", "Technical issue", "Help with a technical problem", "Tech support", "Technical assistance"],
+            "responses": ["Please visit our support page or contact our support team for assistance.", "You can get technical support by visiting our support page.", "Our support team is available to help you with technical issues. Visit our support page for more info."]
+          },
+          {
+            "tag": "covid19",
+            "patterns": ["What are your COVID-19 protocols?", "COVID-19 safety measures", "How are you handling COVID-19?", "COVID-19 precautions", "Coronavirus policies"],
+            "responses": ["We follow all recommended COVID-19 safety protocols. Visit our website for more details.", "Our COVID-19 safety measures are outlined on our website.", "We are committed to safety. Check our website for our COVID-19 protocols."]
+          },
+          {
+            "tag": "social_media",
+            "patterns": ["Are you on social media?", "Social media links", "Can I follow you on social media?", "Your social media profiles", "Where can I find you on social media?"],
+            "responses": ["Follow us on social media! Our profiles are linked on our website.", "You can find our social media links on our website.", "We are active on social media. Check our website for links to our profiles."]
+          },
+          {
+            "tag": "feedback",
+            "patterns": ["How can I give feedback?", "I want to provide feedback", "Give feedback", "Submit a review", "Leave a comment"],
+            "responses": ["We appreciate your feedback! Please visit our website to leave a comment or review.", "You can provide feedback through our website.", "Visit our website to submit your feedback."]
+          },
+          {
+            "tag": "query",
+            "patterns": ["What is Machine Learning?", "What is AI?", "Explain blockchain technology", "What is quantum computing?", "What is the Internet of Things?"],
+            "responses": [
+            "Machine learning (ML) is a branch of artificial intelligence (AI) and computer science that focuses on using data and algorithms to enable AI to imitate the way that humans learn, gradually improving its accuracy.",
+            "Artificial Intelligence (AI) is the simulation of human intelligence in machines that are programmed to think and learn like humans.",
+            "Blockchain technology is a decentralized digital ledger that records transactions across many computers so that the record cannot be altered retroactively.",
+            "Quantum computing is an area of computing focused on developing computer technology based on the principles of quantum theory, which explains the behavior of energy and material on the atomic and subatomic levels.",
+            "The Internet of Things (IoT) refers to the interconnectedness of everyday objects via the internet, allowing them to send and receive data."],
+            "context": [""]
+        }
+    ]
+}
+    
