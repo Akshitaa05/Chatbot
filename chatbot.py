@@ -6,12 +6,14 @@ import tensorflow as tf
 import nltk
 from nltk.stem import WordNetLemmatizer
 
+# Load necessary data and model
 lemmatizer = WordNetLemmatizer()
 intents = json.loads(open('intents.json').read())
 words = pickle.load(open('words.pkl', 'rb'))
 classes = pickle.load(open('classes.pkl', 'rb'))
 model = tf.keras.models.load_model('my_model.keras')
 
+# Define functions for text preprocessing and intent prediction
 def clean_up_sentence(sentence):
     sentence_words = nltk.word_tokenize(sentence)
     sentence_words = [lemmatizer.lemmatize(word.lower()) for word in sentence_words]
@@ -33,23 +35,22 @@ def predict_class(sentence):
     results = [[i, r] for i, r in enumerate(res) if r > ERROR_THRESHOLD]
 
     results.sort(key=lambda x: x[1], reverse=True)
-    return_list = []
-    for r in results:
-        return_list.append({'intent': classes[r[0]], 'probability': str(r[1])})
+    return_list = [{'intent': classes[r[0]], 'probability': str(r[1])} for r in results]
     return return_list
 
-def get_response(intents_list, intents_json):
+# Define a function to retrieve a response based on detected intent
+def get_response(intents_list, intents_data):
     tag = intents_list[0]['intent']
-    list_of_intents = intents_json['intents']
-    for i in list_of_intents:
-        if i['tag'] == tag:
-            if 'variables' in i:
-                result = random.choice(i['responses']).format(**i['variables'])
-            else:
-                result = random.choice(i['responses'])
-            break
-    return result
+    list_of_intents = intents_data['intents']
+    
+    for intent in list_of_intents:
+        if intent['tag'] == tag:
+            responses = intent['responses']
+            return random.choice(responses)
+    
+    return "I'm sorry, I don't have a response for that at the moment."
 
+# Define a fallback response in case no intent is detected
 def fallback_response():
     fallback_responses = [
         "I'm sorry, I didn't understand that.",
@@ -59,17 +60,18 @@ def fallback_response():
     ]
     return random.choice(fallback_responses)
 
+# Main loop for user interaction
 print("GO! Bot is running!")
 
 while True:
     message = input("You: ")
-    ints = predict_class(message)
-    print("Intents:", ints)  # Debug statement
-    if ints:
-        # Select the intent with the highest probability
-        top_intent = max(ints, key=lambda x: float(x['probability']))
-        res = get_response([top_intent], intents)
-        print("Response:", res)  # Debug statement
+    detected_intents = predict_class(message)
+    print("Detected Intents:", detected_intents)  # Debug statement
+    
+    if detected_intents:
+        response = get_response(detected_intents, intents)
+        print("Selected Response:", response)  # Debug statement
     else:
-        res = fallback_response()
-    print("Bot:", res)
+        response = fallback_response()
+    
+    print("Bot:", response)
