@@ -29,7 +29,7 @@ def bag_of_words(sentence):
 def predict_class(sentence):
     bow = bag_of_words(sentence)
     res = model.predict(np.array([bow]))[0]
-    ERROR_THRESHOLD = 0.25
+    ERROR_THRESHOLD = 0.75
     results = [[i, r] for i, r in enumerate(res) if r > ERROR_THRESHOLD]
 
     results.sort(key=lambda x: x[1], reverse=True)
@@ -43,9 +43,10 @@ def get_response(intents_list, intents_json):
     list_of_intents = intents_json['intents']
     for i in list_of_intents:
         if i['tag'] == tag:
-            result = random.choice(i['responses'])
             if 'variables' in i:
                 result = random.choice(i['responses']).format(**i['variables'])
+            else:
+                result = random.choice(i['responses'])
             break
     return result
 
@@ -61,10 +62,12 @@ def fallback_response():
 print("GO! Bot is running!")
 
 while True:
-    message = input("")
+    message = input("You: ")
     ints = predict_class(message)
+    print("Intents:", ints)  # Debug statement
     if ints:
         res = get_response(ints, intents)
+        print("Response:", res)  # Debug statement
     else:
         res = fallback_response()
-    print(res)
+    print("Bot:", res)
